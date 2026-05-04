@@ -2,11 +2,14 @@
 .venv/
 venv/
 env/
+ENV/
 
 # Python cache
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
+.Python
 
 # Log files
 logfiles/
@@ -14,6 +17,7 @@ logfiles/
 
 # Environment variables
 .env
+.env.local
 
 # Build artifacts
 dist/
@@ -21,14 +25,66 @@ build/
 *.egg-info/
 *.dmg
 *.zip
+*.tar.gz
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
 # Persistent state
 persistent.json
 
-# Editor
+# Backup files
+*.bak
+*~
+*.swp
+*.swo
+*~
+
+# Editor/IDE
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyInstaller
+*.spec
+
+# Distribution / packaging
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+
+# Flet specific
+.flet/

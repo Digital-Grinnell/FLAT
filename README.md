@@ -1,22 +1,23 @@
-# FLAT - Flet Layout Application Template
+# 🏢 &nbsp; FLAT - Flet Layout Application Template
 
-FLAT is a template for building desktop applications with [Flet](https://flet.dev). It provides a clean starting point with essential features like persistent settings, logging, function management, and help documentation built-in.
+FLAT is a production-ready template for building desktop applications with [Flet](https://flet.dev). Built on the proven UI architecture from OHM (Oral History Manager), it provides a professional starting point with essential features like persistent settings, logging, function management, and help documentation.
 
 ## Features
 
 ### Core Template Features
-- **Persistent Settings**: Automatic saving/loading of window position and user preferences
-- **Logging System**: Organized log files with timestamps in `~/FLAT-data/logfiles/`
-- **Function Management**: Dropdown-based function selection with usage tracking
-- **Help Mode**: Built-in markdown help system for each function
-- **Directory Pickers**: Input and output directory selection with state persistence
-- **Status Bar**: User-friendly status messages at bottom of window
-- **Clean UI Layout**: Professional desktop application appearance
+- **Persistent Settings**: Automatic saving/loading of window position, directories, and user preferences
+- **Professional Logging**: Timestamped log files in `~/FLAT-data/logfiles/` with real-time display
+- **Function Management**: Icon-enhanced dropdown with usage tracking and workflow ordering
+- **Help Mode**: Built-in markdown help viewer for each function with copy-to-clipboard
+- **Smart Directory Management**: Collapsible directories section to maximize screen space
+- **File Selection**: Dedicated file picker with persistence (separate from directories)
+- **Status & Log Output**: Professional status display with copy/paste and log management
+- **Proven UI Layout**: Based on OHM's battle-tested interface design
 
 ### Example Functions Included
-- **Function 1**: List all files in a directory
-- **Function 2**: Count files by extension type
-- **Function 3**: Display system information
+- **Function 1** 📁: List all files in a directory
+- **Function 2** 📊: Count files by extension type
+- **Function 3** 💻: Display system information
 
 These examples demonstrate the function pattern and can be replaced with your own functionality.
 
@@ -56,14 +57,19 @@ No other dependencies required for the base template.
 
 ```
 FLAT/
-├── app.py                      # Main application file
+├── app.py                      # Main application (715 lines - streamlined!)
 ├── run.sh                      # macOS/Linux launcher
 ├── run.bat                     # Windows launcher
+├── build_dmg.sh               # macOS installer builder
+├── build_windows_zip.sh       # Windows package builder
 ├── python_requirements.txt     # Python dependencies
 ├── .gitignore                  # Git exclusions
-├── FUNCTION_1_LIST_FILES.md    # Help documentation for Function 1
-├── FUNCTION_2_COUNT_FILES.md   # Help documentation for Function 2
-├── FUNCTION_3_SYSTEM_INFO.md   # Help documentation for Function 3
+├── LICENSE                     # MIT License
+├── CHANGELOG.md               # Version history
+├── QUICKSTART.md              # Quick reference guide
+├── FUNCTION_1_LIST_FILES.md   # Help docs for Function 1
+├── FUNCTION_2_COUNT_FILES.md  # Help docs for Function 2
+├── FUNCTION_3_SYSTEM_INFO.md  # Help docs for Function 3
 └── README.md                   # This file
 ```
 
@@ -89,58 +95,59 @@ Update these items throughout the codebase:
 
 ### 2. Add Your Own Functions
 
-To add a new function:
+To add a new function, follow the OHM-proven pattern:
 
 **a) Create the function handler in `app.py`:**
 
 ```python
-def on_function_4_your_feature():
-    """Your Function 4: Description."""
+def on_function_4_your_feature(e):
+    """Function 4: Your custom feature description."""
     storage.record_function_usage("Function 4")
     
-    # Your implementation here
-    if not input_dir_text.value:
-        show_status("Error: Please select an input directory first", is_error=True)
+    # Access current directory if needed
+    if not current_directory or not current_directory.exists():
+        update_status("Error: Please select an input directory first", is_error=True)
         return
     
+    # Your implementation here
     # ... do work ...
     
-    show_status("Your feature completed successfully")
+    update_status("Your feature completed successfully")
+    add_log_message("Function 4 completed")
     logger.info("Function 4: Completed")
 ```
 
-**b) Add to the function dropdown:**
+**b) Add to the active_functions list:**
 
 ```python
-function_options = [
-    # ... existing options ...
-    ft.dropdown.Option("4", "4: Your New Feature"),
+active_functions = [
+    "function_1_list_files",
+    "function_2_count_files",
+    "function_3_system_info",
+    "function_4_your_feature",  # Add this
 ]
 ```
 
-**c) Register in the function map:**
+**c) Register in the functions dictionary:**
 
 ```python
-function_map = {
-    "1": on_function_1_list_files,
-    "2": on_function_2_count_files,
-    "3": on_function_3_system_info,
-    "4": on_function_4_your_feature,  # Add this
+functions = {
+    # ... existing functions ...
+    "function_4_your_feature": {
+        "label": "4: Your Custom Feature",
+        "icon": "🎯",  # Pick an emoji icon
+        "handler": on_function_4_your_feature,
+        "help_file": "FUNCTION_4_YOUR_FEATURE.md"
+    },
 }
 ```
 
 **d) Create help documentation:**
 
-Create `FUNCTION_4_YOUR_FEATURE.md` with documentation, then add it to the help files mapping:
-
-```python
-help_files = {
-    "1": "FUNCTION_1_LIST_FILES.md",
-    "2": "FUNCTION_2_COUNT_FILES.md",
-    "3": "FUNCTION_3_SYSTEM_INFO.md",
-    "4": "FUNCTION_4_YOUR_FEATURE.md",  # Add this
-}
-```
+Create `FUNCTION_4_YOUR_FEATURE.md` with markdown documentation. The template automatically:
+- Shows help in a dialog when Help Mode is enabled
+- Provides copy-to-clipboard functionality
+- Displays the function's icon and label
 
 ### 3. Add Dependencies
 
@@ -210,11 +217,25 @@ All settings are automatically saved to `~/FLAT-data/persistent.json`.
 
 ### 6. Remove Example Functions
 
-Once you've built your own functions, remove the examples:
+Once you've built your own functions, clean up the examples:
 
-1. Delete functions from `app.py`: `on_function_1_list_files`, etc.
-2. Delete help files: `FUNCTION_1_LIST_FILES.md`, etc.
-3. Update `function_options` and `function_map` in `app.py`
+1. Delete function handlers from `app.py`: `on_function_1_list_files`, `on_function_2_count_files`, `on_function_3_system_info`
+2. Delete help files: `FUNCTION_1_LIST_FILES.md`, `FUNCTION_2_COUNT_FILES.md`, `FUNCTION_3_SYSTEM_INFO.md`
+3. Remove entries from `active_functions` list and `functions` dictionary
+4. Update the title and description to match your application
+
+## UI Architecture
+
+FLAT uses OHM's proven layout structure:
+
+- **Collapsible Directories Section**: Saves vertical space once directories are set
+- **File Selection**: Always visible for quick file changes between operations
+- **Functions Dropdown**: Icon-enhanced with emoji indicators
+- **Status Output**: Multi-line with copy-to-clipboard
+- **Log Output**: Timestamped entries with copy and clear functionality
+- **Help Mode**: Toggle to view function documentation instead of executing
+
+This layout has been refined through real-world use in production applications.
 
 ## Building Standalone Packages
 
@@ -321,10 +342,26 @@ The included `.gitignore` excludes:
 
 ## License
 
-This template is provided as-is for building your own applications. Modify freely.
+MIT License - See [LICENSE](LICENSE) or [LICENSE.md](LICENSE.md) for full details.
+
+Copyright (c) 2026 Digital.Grinnell / FLAT Contributors
+
+Free to use, modify, and distribute. Attribution appreciated but not required.
+
+## Contributing
+
+Contributions are welcome! Please feel free to:
+- Report bugs or issues
+- Suggest new features or improvements
+- Submit pull requests
+- Share applications you've built with FLAT
 
 ## About
 
-FLAT was created to provide a solid starting point for Flet desktop applications without the overhead of reinventing common patterns like settings persistence, logging, and help systems.
+FLAT was created by extracting and generalizing the proven UI framework from OHM (Oral History Manager). It provides a professional starting point for Flet desktop applications, eliminating the need to reinvent common patterns like settings persistence, logging, function management, and help systems.
 
-Built with ❤️ using [Flet](https://flet.dev)
+The template's architecture has been refined through real-world production use, ensuring reliability and maintainability.
+
+**Repository**: https://github.com/Digital-Grinnell/FLAT
+
+Built with ❤️ using [Flet](https://flet.dev) by the Digital.Grinnell team.
