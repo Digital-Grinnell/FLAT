@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated function dropdown to include Function 0 with ⚙️ icon
 
+### Documentation
+- **Terminology Convention**: Use "folder" (not "directory") in all user-facing documentation and app interface text. While "directory" is the technical term, "folder" is more familiar to end users. Both terms are synonymous in this codebase.
+
 ---
 
 ## [1.0.0] - 2026-05-04
