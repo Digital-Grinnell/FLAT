@@ -15,6 +15,7 @@ FLAT is a production-ready template for building desktop applications with [Flet
 - **Proven UI Layout**: Based on OHM's battle-tested interface design
 
 ### Example Functions Included
+- **Function 0** ⚙️: App Settings - Configure application settings with encrypted storage
 - **Function 1** 📁: List all files in a directory
 - **Function 2** 📊: Count files by extension type
 - **Function 3** 💻: Display system information
@@ -223,6 +224,8 @@ Once you've built your own functions, clean up the examples:
 2. Delete help files: `FUNCTION_1_LIST_FILES.md`, `FUNCTION_2_COUNT_FILES.md`, `FUNCTION_3_SYSTEM_INFO.md`
 3. Remove entries from `active_functions` list and `functions` dictionary
 4. Update the title and description to match your application
+
+**Note**: Function 0 (App Settings) provides core configuration management and may be useful to keep and customize rather than remove. If you don't need it, also remove `on_function_0_app_settings` and `FUNCTION_0_APP_SETTINGS.md`.
 
 ## UI Architecture
 

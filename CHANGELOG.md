@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Function 0: App Settings** - Configuration management system
+  - Settings stored in `flat_settings.json` within working/output directory
+  - Sensitive field encryption using Fernet (cryptography library)
+  - Popup dialog editor for all settings
+  - Support for boolean fields with flexible input (true/false, yes/no, 1/0, on/off)
+  - Encrypted fields: `api_key`, `api_secret`, `password`
+  - Encryption key stored separately in `~/.FLAT-data/encryption_key` with restricted permissions
+  - Settings automatically decrypt on load and encrypt on save
+  - Safe for version control (credentials stored encrypted)
+- Added `cryptography` dependency to `python_requirements.txt`
+- Created `FUNCTION_0_APP_SETTINGS.md` documentation
+
+### Changed
+- Updated function dropdown to include Function 0 with ⚙️ icon
+
+---
+
 ## [1.0.0] - 2026-05-04
 
 ### Initial Release
